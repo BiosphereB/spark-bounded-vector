@@ -8,8 +8,6 @@ package body Bounded_Vectors with SPARK_Mode is
 
    procedure Pop (V : in out Vector) is
    begin
-      -- Wir dekrementieren einfach den Index. 
-      -- Die Precondition garantiert uns, dass Size > 0 ist.
       V.Size := V.Size - 1;
    end Pop;
 

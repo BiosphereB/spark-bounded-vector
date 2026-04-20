@@ -11,6 +11,9 @@ package Bounded_Vectors with SPARK_Mode is
    function Length (V : Vector) return Natural;
    function Is_Empty (V : Vector) return Boolean is (Length (V) = 0);
    function Is_Full (V : Vector) return Boolean is (Length (V) = Max_Capacity);
+   
+   -- Returns the maximum number of elements the vector can hold
+   function Capacity (V : Vector) return Positive is (Max_Capacity);
 
    -- Check if an element exists in the vector
    function Contains (V : Vector; E : Element_Type) return Boolean with

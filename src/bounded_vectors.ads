@@ -1,6 +1,8 @@
+generic
+   type Element_Type is private;
+   Default_Element : Element_Type;
 package Bounded_Vectors with SPARK_Mode is
    Max_Capacity : constant := 100;
-   subtype Element_Type is Integer;
 
    type Vector is private with
      Default_Initial_Condition => Length (Vector) = 0;
@@ -36,15 +38,13 @@ private
    type Element_Array is array (1 .. Max_Capacity) of Element_Type;
 
    type Vector is record
-      Data : Element_Array := (others => 0);
+      -- Hier nutzen wir das Default_Element zur sicheren Initialisierung
+      Data : Element_Array := (others => Default_Element);
       Size : Natural range 0 .. Max_Capacity := 0;
    end record;
 
    function Length (V : Vector) return Natural is (V.Size);
-   
-   function Element (V : Vector; Index : Positive) return Element_Type is
-     (V.Data (Index));
+   function Element (V : Vector; Index : Positive) return Element_Type is (V.Data (Index));
+   function Top (V : Vector) return Element_Type is (V.Data (V.Size));
 
-   function Top (V : Vector) return Element_Type is
-     (V.Data (V.Size));
 end Bounded_Vectors;

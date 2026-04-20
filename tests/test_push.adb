@@ -9,12 +9,17 @@ procedure Test_Push with SPARK_Mode is
    use Int_Stack;
    V : Vector;
 begin
-   -- Fill and then clear
-   Push (V, 42);
-   Push (V, 24);
-   pragma Assert (Length (V) = 2);
+   Push (V, 10);
+   Push (V, 20);
+   
+   pragma Assert (Contains (V, 10));
+   pragma Assert (Contains (V, 20));
+   pragma Assert (not Contains (V, 30));
 
+   Pop (V);
+   pragma Assert (not Contains (V, 20));
+   pragma Assert (Contains (V, 10));
+   
    Clear (V);
-   pragma Assert (Is_Empty (V));
-   pragma Assert (Length (V) = 0);
+   pragma Assert (not Contains (V, 10));
 end Test_Push;

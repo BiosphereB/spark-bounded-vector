@@ -1,8 +1,8 @@
 generic
    type Element_Type is private;
    Default_Element : Element_Type;
+   Max_Capacity    : Positive; -- Jetzt als generischer Parameter
 package Bounded_Vectors with SPARK_Mode is
-   Max_Capacity : constant := 100;
 
    type Vector is private with
      Default_Initial_Condition => Length (Vector) = 0;
@@ -35,10 +35,10 @@ package Bounded_Vectors with SPARK_Mode is
                 Unchanged (V, V'Old, Length (V)));
 
 private
+   -- Das Array nutzt nun die generische Kapazität
    type Element_Array is array (1 .. Max_Capacity) of Element_Type;
 
    type Vector is record
-      -- Hier nutzen wir das Default_Element zur sicheren Initialisierung
       Data : Element_Array := (others => Default_Element);
       Size : Natural range 0 .. Max_Capacity := 0;
    end record;

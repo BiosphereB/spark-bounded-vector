@@ -11,4 +11,9 @@ package body Bounded_Vectors with SPARK_Mode is
       V.Size := V.Size - 1;
    end Pop;
 
+   procedure Clear (V : in out Vector) is
+   begin
+      V.Size := 0;
+   end Clear;
+
 end Bounded_Vectors;

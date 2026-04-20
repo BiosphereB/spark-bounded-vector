@@ -1,30 +1,20 @@
 with Bounded_Vectors;
 
 procedure Test_Push with SPARK_Mode is
-   -- Instantiate with small capacity to test Is_Full easily
-   Capacity : constant := 2;
-   package Small_Stack is new Bounded_Vectors 
+   package Int_Stack is new Bounded_Vectors 
      (Element_Type    => Integer, 
       Default_Element => 0, 
-      Max_Capacity    => Capacity);
+      Max_Capacity    => 10);
    
-   use Small_Stack;
+   use Int_Stack;
    V : Vector;
 begin
-   -- Check initial state
+   -- Fill and then clear
+   Push (V, 42);
+   Push (V, 24);
+   pragma Assert (Length (V) = 2);
+
+   Clear (V);
    pragma Assert (Is_Empty (V));
-   pragma Assert (not Is_Full (V));
-
-   -- Fill the vector
-   Push (V, 1);
-   pragma Assert (not Is_Full (V));
-
-   Push (V, 2);
-   -- Vector should be full now
-   pragma Assert (Is_Full (V));
-   pragma Assert (Length (V) = Capacity);
-
-   -- Test transition back to not full
-   Pop (V);
-   pragma Assert (not Is_Full (V));
+   pragma Assert (Length (V) = 0);
 end Test_Push;

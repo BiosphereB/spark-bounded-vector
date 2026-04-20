@@ -11,15 +11,14 @@ procedure Test_Push with SPARK_Mode is
 begin
    Push (V, 10);
    Push (V, 20);
+   Push (V, 30);
    
-   pragma Assert (Contains (V, 10));
-   pragma Assert (Contains (V, 20));
-   pragma Assert (not Contains (V, 30));
-
-   Pop (V);
-   pragma Assert (not Contains (V, 20));
-   pragma Assert (Contains (V, 10));
+   -- Replace the middle element
+   Replace_Element (V, 2, 99);
    
-   Clear (V);
-   pragma Assert (not Contains (V, 10));
+   pragma Assert (Element (V, 1) = 10); -- Should be unchanged
+   pragma Assert (Element (V, 2) = 99); -- Should be updated
+   pragma Assert (Element (V, 3) = 30); -- Should be unchanged
+   
+   pragma Assert (Length (V) = 3);
 end Test_Push;

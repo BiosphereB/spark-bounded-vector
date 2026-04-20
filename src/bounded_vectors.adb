@@ -11,6 +11,11 @@ package body Bounded_Vectors with SPARK_Mode is
       V.Size := V.Size - 1;
    end Pop;
 
+   procedure Replace_Element (V : in out Vector; Index : Positive; E : Element_Type) is
+   begin
+      V.Data (Index) := E;
+   end Replace_Element;
+
    procedure Clear (V : in out Vector) is
    begin
       V.Size := 0;

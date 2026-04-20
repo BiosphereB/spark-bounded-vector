@@ -16,9 +16,11 @@ package Bounded_Vectors with SPARK_Mode is
    function Contains (V : Vector; E : Element_Type) return Boolean with
      Post => Contains'Result = (for some I in 1 .. Length (V) => Element (V, I) = E);
 
+   -- Returns the top element without removing it
    function Top (V : Vector) return Element_Type with
      Pre => Length (V) >= 1 and then Length (V) <= Max_Capacity;
 
+   -- Returns the element at a specific index
    function Element (V : Vector; Index : Positive) return Element_Type with
      Pre => Index >= 1 and then Index <= Length (V) and then Index <= Max_Capacity;
 
@@ -42,6 +44,14 @@ package Bounded_Vectors with SPARK_Mode is
              (if Length (V) >= 1 then 
                 Top (V) = Element (V'Old, Length (V)) and
                 Unchanged (V, V'Old, Length (V)));
+
+   -- Replaces an element at a specific index
+   procedure Replace_Element (V : in out Vector; Index : Positive; E : Element_Type) with
+     Pre  => Index <= Length (V),
+     Post => Length (V) = Length (V'Old) and then
+             Element (V, Index) = E and then
+             Unchanged (V, V'Old, Index - 1) and then
+             (for all I in Index + 1 .. Length (V) => Element (V, I) = Element (V'Old, I));
 
    procedure Clear (V : in out Vector) with
      Post => Is_Empty (V);
